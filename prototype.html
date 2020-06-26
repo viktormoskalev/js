@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>prototype</title>
+</head>
+
+<body>
+<h1>Prototype</h1>
+
+  <p> const a ="abcde";</p>
+  <p> a[0],a[1], a[2]</p>
+  <div class="print"></div>
+  <h2>вычесляем корень 100.sqrt() добавив в прототип Number метод sqrt</h2>
+  <p> Number.prototype.sqrt = function () { <br>
+      return Math.sqrt(this) ;
+      } <br>
+      console.log((100).sqrt());
+    <br>
+    <b>10</b>
+  </p>
+  <script>
+    const a = "abcde";
+    p = x => {
+      const div = document.createElement("div");
+      div.innerText = x;
+      document.querySelector(".print").append(div);
+    }
+    p(a[0]);
+    p(a[1]);
+    p(a[2]);
+
+
+    Number.prototype.sqrt = function() {
+      return Math.sqrt(this);
+    }
+    console.log((100).sqrt());
+  </script>
+</body>
+
+</html>

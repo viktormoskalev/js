@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>Mouse event</title>
+  <style>
+    span {
+      display: none
+    }
+    .test1 {
+      text-shadow: 1px 10px 0px red, 15px -10px 0 blue;
+      font-size: 90px;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="test1">
+    hello
+  </div>
+  <div class="test2">
+  </div>
+  <script>
+    const test1 = document.querySelector(".test1");
+    test1.style.textShadow = "10px 50px 0px green";
+    var s = [];
+    function init() {
+      if (document.layers) document.captureEvents(Event.MOUSEMOVE);
+      document.onmousemove = mousemove;
+    }
+    function mousemove(event) {
+      var mouse_x = mouse_y = 0;
+      if (document.attachEvent != null) {
+        mouse_x = window.event.clientX;
+        mouse_y = window.event.clientY;
+      } else if (!document.attachEvent && document.addEventListener) {
+        mouse_x = event.clientX;
+        mouse_y = event.clientY;
+      }
+      status = "x = " + mouse_x + ", y = " + mouse_y;
+      var x = (mouse_x) / document.documentElement.clientWidth * 500 - 250;
+      var y = (mouse_y) / document.documentElement.clientHeight * 500 - 250;
+      s[0] = `${-x}px ${y}px 1px rgba(${Math.abs(x-y)}, ${Math.abs(x)}, ${Math.abs(y)}, 0.9)`;
+      s[1] = `${x}px ${-y}px 1px rgba(${Math.abs(y-x)}, ${Math.abs(y)}, ${Math.abs(y)}, 0.9)`;
+      s[2] = `${y}px ${x}px 1px rgba(${Math.abs(x-y)}, ${Math.abs(y)}, ${Math.abs(x)}, 0.9)`;
+      s[3] = `${-y}px ${-x}px 1px rgba(${Math.abs(x-y)}, ${Math.abs(x-y)}, ${Math.abs(y)}, 0.9)`;
+      var x2 = s[0] + " , " + s[1] + " , " + s[2] + " , " + s[3];
+      console.log(s[0]);
+      test1.style.textShadow = x2;
+    }
+    init()
+  </script>
+</body>
+
+</html>
