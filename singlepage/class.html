@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>class</title>
+  <link rel="stylesheet" href="style/class.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+
+<body>
+  <div class="container">
+    <h2>Без цены</h2>
+    <div class="grid" id="noprice"></div>
+    <h2>С ценой</h2>
+    <h4>созданно при помощи наследования от класса</h4>
+    <div class="grid">
+      <div class="grid-item">
+        <span>Диапазон цен <br>
+        <br>
+        
+          от</span>
+
+    <input type="number" value=0 id="from">
+    <span>до</span>
+    <input type="number" value=999 id="to">
+      </div>
+      <div class="grid-item flex-center"><button id="filter">Показать</button></div>
+      <div class="flex-center grid-item">
+     
+    <select  id="sorter" size="1">
+      <option value="max">От дорогих к дешевым</option>
+      <option selected value="min">От дешевых к дорогим</option>
+    </select>   
+      </div>
+    </div>
+    
+    
+
+
+    <div class="grid" id="withprice"></div>
+  </div>
+  <script>
+    //класс без цены
+    class Toy {
+      constructor(title, img, description) {
+        this.title = title;
+        this.img = img;
+        this.description = description;
+      }
+
+      contentMaker() {
+        let content = "";
+        content += `<p class="card-title">${this.title}</p>`;
+        content += `<figure class="card-img"><img src="img/${this.img}.jpg" alt="toy"></figure>`;
+        content += `<p class="card-description">${this.description}</p>`;
+        return content;
+      }
+
+      render(x) {
+        let place = document.querySelector(x);
+        let card = "";
+        card += `<div class="grid-item">`;
+        card += `<div class="card">`;
+        card += this.contentMaker()
+        card += `</div></div>`;
+        place.innerHTML += card;
+      }
+    }
+
+    let toy1 = new Toy("Toy 1", 1, "good toy");
+    let toy2 = new Toy("Toy 2", 2, "very good toy");
+    let toy3 = new Toy("Toy 3", 3, "best toy");
+    toy1.render("#noprice");
+    toy2.render("#noprice");
+    toy3.render("#noprice");
+
+    // добавляем в класс цену
+
+    class ToyP extends Toy {
+      constructor(title, img, description, price) {
+        super(title, img, description);
+        this.price = price;
+      }
+
+      contentMaker() {
+        let content = super.contentMaker();
+        content += `<p class="card-description">price--${this.price}$</p>`
+        return content;
+      }
+    }
+    let toyP = [];
+    toyP[1] = new ToyP("Toy 1", 1, "good toy1", 10);
+    toyP[2] = new ToyP("Toy 2", 2, "good toy2", 30);
+    toyP[3] = new ToyP("Toy 3", 3, "good toy3", 60);
+    toyP[4] = new ToyP("Toy 4", 4, "good toy4", 33);
+    toyP[5] = new ToyP("Toy 5", 5, "good toy5", 150);
+    toyP[6] = new ToyP("Toy 6", 6, "good toy6", 85);
+    toyP[7] = new ToyP("Toy 7", 7, "good toy7", 550);
+    toyP[8] = new ToyP("Toy 8", 8, "good toy8", 400);
+    toyP[0] = new ToyP("Toy 9", 9, "good toy9", 50);
+
+
+    let select = document.querySelector("#sorter");
+    let withprice = document.querySelector("#withprice");
+    let from = document.querySelector("#from");
+    let to = document.querySelector("#to");
+    let filter = document.querySelector("#filter");
+
+    function print(sorttoy) {
+      for (let value of sorttoy) {
+        if (value.price >= from.value & value.price <= to.value) {
+          value.render("#withprice");
+        }
+      }
+    }
+
+    function min() {
+      withprice.innerHTML = " ";
+      let sorttoy = toyP.sort(function(a, b) {
+        return a.price - b.price;
+      });
+      print(sorttoy);
+    }
+
+    function max() {
+      withprice.innerHTML = " ";
+      let sorttoy = toyP.sort(function(a, b) {
+        return b.price - a.price;
+      });
+      print(sorttoy);
+    }
+
+    min();
+
+    function finish(e) {
+      if (sorter.value == "min") {
+        min();
+      } else {
+        max();
+      }
+    }
+    filter.addEventListener("click", function() {
+      finish();
+    })
+    sorter.addEventListener("change", function() {
+      finish();
+    })
+  </script>
+</body>
+
+</html>
