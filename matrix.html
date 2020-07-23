@@ -28,16 +28,28 @@
       font-size: 30px;
       transform: rotate(90deg);
       transform-origin: 0 0;
-      animation: 6s 6s bgc forwards;
+    
+      animation:bgc 6s 5s forwards;
     }
-
-    @keyframes bgc {
+  
+      @keyframes bgc {
       0% {
-        background-color: #000000;
+     background: #000;
       }
-
+    
       100% {
-        background-color: #071a09;
+    background-color: #122400;
+      }
+    }  
+    @keyframes opa {
+      0% {
+               opacity: 0;
+        color: black;
+      }
+    
+      100% {
+       opacity: 0.2;
+        color:#4eff00;
       }
     }
 
@@ -55,9 +67,8 @@
     }
 
     .popup {
-      /*background-color: #4a4646;*/
-      line-height: 45vh;
-      color: green;
+           line-height: 45vh;
+/*      color: green;*/
       height: 100vh;
       width: 100vw;
       position: absolute;
@@ -65,8 +76,8 @@
       font-size: 199px;
       font-weight: 900;
       text-align: center;
-      mix-blend-mode: multiply;
-      /*      display: none;*/
+      opacity: 0;
+      animation:opa 6s 2s forwards;
     }
   </style>
 </head>
@@ -96,16 +107,20 @@
       let s = document.querySelectorAll("span");
       for (i = 1; i < 25; i++) {
         try {
-          let rnd = Math.round(Math.random() * tl) - 10
+          let rnd = Math.round(Math.random() * (tl - 10))
           let color = `rgba(0, 50, 0, 1)`
           s[rnd].style.color = color;
-        } catch {}
+        } catch (e) {
+          console.log(e)
+        }
       }
       for (i = 1; i < 25; i++) {
         try {
-          let rnd = Math.round(Math.random() * tl) - 10
+          let rnd = Math.round(Math.random() * (tl - 10))
           s[rnd].style.color = "black";
-        } catch {}
+        } catch (e) {
+          console.log(e);
+        }
       }
       let lot = 14; //lines
       setTimeout(function() {
@@ -119,7 +134,7 @@
       let span = document.createElement("span");
       span.textContent = text[i];
       p.append(span);
-      l = l + 50; //step
+      l = l + 150; //step
       setTimeout(g, l, i, text.length);
     }
   </script>
